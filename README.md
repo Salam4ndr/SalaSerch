@@ -16,7 +16,7 @@ python3 salamain.py [url] [wordlist]
 
 ## Example
 ```bash
-python3 salamain.py https://octopuswebsite.netlify.app wordlist.txt
+python3 salamain.py https://www.google.com wordlist.txt
 ```
 
 ## Contributing
