@@ -1,5 +1,6 @@
 index
 login
+index.html
 httpdocumentation
 index
 login

@@ -1,4 +1,4 @@
-This is my directory enumeration program. Use my program responsibly and do not use it for malicious purposes. It is very fast with thread
+This is my enumeration in different URL position. Use my program responsibly and do not use it for malicious purposes. It is very fast with thread
 
 ## Installation
 
@@ -16,7 +16,7 @@ python3 salamain.py [url] [wordlist]
 
 ## Example
 ```bash
-python3 salamain.py https://www.google.com wordlist.txt
+python3 salamain.py https://www.google.com/SALAMANDER wordlist.txt
 ```
 
 ## Contributing
