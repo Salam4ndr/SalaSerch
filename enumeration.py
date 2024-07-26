@@ -1,13 +1,14 @@
 import requests
 import concurrent.futures
 from rich import print
+from tqdm import tqdm
 
 def check_url(url, path):
     try:
         # Make a HEAD request to the specified URL and path
         response = requests.head(f"{url}/{path}", timeout=0.5, allow_redirects=False)
         # Check if the response status code is 200 or 301 OK
-        if response.status_code == 200 or response.status_code == 301 :
+        if response.status_code == 200 or response.status_code == 301:
             # Print a message indicating a successful request
             print(f"[yellow][+] {url}/{path}")
     except (requests.exceptions.RequestException, requests.exceptions.Timeout):
@@ -21,11 +22,19 @@ def enumeration(url, wordlist):
     # Open the wordlist file with UTF-8 encoding, ignoring errors
     with open(wordlist, "r", encoding="utf-8", errors='ignore') as file:
         # Read and strip each line in the file to get paths
-        paths = (line.strip() for line in file)
+        paths = [line.strip() for line in file]
 
-        # Create a ThreadPoolExecutor with 100 maximum workers
-        with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
+    # Create a ThreadPoolExecutor with 100 maximum workers
+    with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
+        # Use tqdm to create a progress bar
+        with tqdm(total=len(paths), desc="Progress", unit="path") as pbar:
             futures = []
-            # Submit tasks for each path in the wordlist
             for path in paths:
                 future = executor.submit(check_url, url, path)
+                futures.append(future)
+
+            # Update the progress bar as each future completes
+            for future in concurrent.futures.as_completed(futures):
+                pbar.update(1)
+
+
